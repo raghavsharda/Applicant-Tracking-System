@@ -3,6 +3,10 @@ from pathlib import Path
 from string import punctuation
 from nltk.tokenize import word_tokenize
 
+PROJ_DIR = os.path.dirname(os.path.realpath('__file__'))
+DATA_DIR = os.path.join(PROJ_DIR, 'DATA')
+KEYWORDS_DIR = os.path.join(PROJ_DIR, 'KEYWORDS')
+
 # For ref: https://usefulshortcuts.com/alt-codes/bullet-alt-codes.php
 def tokenize(pdfs_dict):
     pdfs_dict_tokens = {}
@@ -15,11 +19,8 @@ def tokenize(pdfs_dict):
 
 # For ref: https://pymupdf.readthedocs.io/en/latest/document.html#document
 def readfiles():
-    fileDir = os.path.dirname(os.path.realpath('__file__'))
-    file_data_path = os.path.join(fileDir, 'DATA')
-    file_keywords_path = os.path.join(fileDir, 'KEYWORDS')
     pdf_text, pdfs_dict, keyword_list =  "", {}, []
-    for pdf_file in glob.glob(os.path.join(file_data_path, '*.pdf')):
+    for pdf_file in glob.glob(os.path.join(DATA_DIR, '*.pdf')):
         with fitz.open(pdf_file) as doc:
             # read each page
             for page in doc: 
@@ -29,7 +30,7 @@ def readfiles():
         # save the read pdf in dict
         pdfs_dict[pdf_filename] = pdf_text
     
-    for keyword_file in glob.glob(os.path.join(file_keywords_path, '*.txt')):
+    for keyword_file in glob.glob(os.path.join(KEYWORDS_DIR, '*.txt')):
         with open(keyword_file , 'r') as file:
             keyword_list = file.read().split("\n")
 
