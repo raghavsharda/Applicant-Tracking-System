@@ -1,4 +1,4 @@
-import sys, os, glob, fitz, textract
+import sys, os, glob, fitz
 from pathlib import Path
 from string import punctuation
 from nltk.tokenize import word_tokenize
